@@ -1,0 +1,244 @@
+<?php
+
+  include('db.php');
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Clinical Service Management System</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.3/dist/jquery.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+
+  <style>
+    *
+    {
+      margin: 0;
+      padding: 0;
+      font-family: tahoma;
+    }
+.card {
+  box-shadow: 0 4px 8px 0 black;
+  transition: 0.3s;
+  width: 100%;
+  align-content: center;
+  border-radius: 5px;
+}
+.card:hover {
+  box-shadow: 0 8px 16px 0 black;
+}
+img {
+  border-radius: 5px 5px 0 0;
+  width: 300px;
+  height: 250px;
+
+}
+.container {
+  padding: 2px 16px;
+}
+
+@media all and (max-width: 767px) {
+   .col-sm-1, .col-sm-2, .col-sm-3, 
+   .col-sm-4, .col-sm-5, .col-sm-6,
+   .col-sm-7, .col-sm-8, .col-sm-9,
+   .col-sm-10, .col-sm-11 {
+      margin-bottom: 20px;
+   }
+}
+.clr
+{
+color: red;
+}
+a:hover{
+  text-decoration: none;
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+.header {
+  width: 100%;
+  height: 100vh;
+  
+}
+
+.side-nav {
+  width: 250px;
+  height: 100%;
+  background: lightgrey;
+  position: fixed;
+  top: 0;
+  left: 0;
+  padding: 20px 30px;
+}
+
+.logo {
+  display: block;
+  margin-bottom: 130px;
+}
+
+.logo-img {
+  width: 170px;
+  margin-top: 20px;
+}
+
+.nav-links {
+  list-style: none;
+  position: relative;
+}
+
+.nav-links li {
+  padding: 10px 0;
+}
+
+.nav-links li a {
+  color: #000000;
+  text-decoration: none;
+  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+}
+
+.nav-links li a i {
+  font-size: 22px;
+  margin-right: 20px;
+}
+
+.active {
+  background: #000000;
+  width: 100%;
+  height: 47px;
+  position: absolute;
+  left: 0;
+  top: 2.6%;
+  z-index: -1;
+  border-radius: 6px;
+  box-shadow: 0 5px 10px rgba(255, 255, 255, 0.4);
+  display: none;
+  transition: top 0.5s;
+}
+
+
+</style>
+
+
+</head>
+<body style="background-color:white;">
+
+  <div class="container">
+<div class="row">
+  
+  <div class="col-sm-2">
+     <div class="header">
+    <div class="side-nav">
+     
+        <img src="admin.jpg" class="logo-img">
+        <br><br>
+           <ul class="nav-links">
+        <li><a href="main.php">
+            <i class="fa-solid fa-house-user"></i>
+            <p>Dashboard</p>
+          </a>
+        </li>
+        <li><a href="adddoctor.php">
+            <i class="fa-solid fa-comment-dots"></i>
+            <p>Add Doctor</p>
+          </a>
+        </li>
+
+        <li><a href="managedoctor.php">
+            <i class="fa-solid fa-comment-dots"></i>
+            <p>Manage Doctor</p>
+          </a>
+        </li>
+        
+        <li><a href="users.php">
+            <i class="fa-solid fa-user"></i>
+            <p>View Users</p>
+          </a>
+        </li>
+        <li><a href="logout.php">
+            <i class="fa-solid fa-user"></i>
+            <p>Logout</p>
+          </a>
+        </li>
+        
+        
+       
+        <div class="active"></div>
+      </ul>
+    </div>
+  </div>
+  </div>
+
+   <div class="col-sm-10">
+    <center><h2>Doctors Lists</h2><br></center>
+<?php
+$result = mysqli_query($con,"SELECT * FROM doctors");
+while($row = mysqli_fetch_array($result))
+  {
+      $id=$row['id'];
+?>
+    <div class="row">
+        
+        <div class="col-sm-4 cell" >
+  <img src="<?php echo $row['doctor_image'] ?>">
+
+         </div>
+
+    
+         <div class="col-sm-8 cell" >
+
+            <p>Doctor Name :  <?php echo $row['doctor_name'] ?></p>
+            <p>Qualification:<?php echo $row['education'] ?></p>
+
+             <p>Experiance :  <?php echo $row['experience'] ?></p>
+            <p>Dr.Mobile Number:<?php echo $row['mobile'] ?></p>
+
+             <p>Dr. Email :  <?php echo $row['email'] ?></p>
+            <p>Password:<?php echo $row['password'] ?></p>
+
+             <p>Address :  <?php echo $row['address'] ?></p>
+            <p>About Doctor:<?php echo $row['description'] ?></p>
+
+           
+     <br><br>
+
+            
+
+            Edit Doctor:<a class="" href="edit.php?id=<?php echo $id ?>"> <span style="color:green">Click Now</span></a>  &nbsp;&nbsp;&nbsp;
+
+               Remove Doctor:<a class="" href="delete.php?id=<?php echo $id ?>"> <span style="color:Red">Click Now</span>&nbsp;&nbsp;&nbsp;</a>
+          
+            
+        </div>
+        
+         
+       
+    </div>
+     <br>
+        <hr>
+    <?php
+  }
+    ?>
+    
+</div>
+
+   
+    </div>
+
+
+</body>
+</html>
+
+      
+    </body>
+</html>
+</body>
+</html>
